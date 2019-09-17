@@ -1,0 +1,7 @@
+{
+  "baseUrl": "https://zava-preview.zavamed.com/uk",
+  "env": {
+    "name": "staging",
+    "mocks": false
+  }
+}
