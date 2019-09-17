@@ -23,9 +23,9 @@ node('aws-slave') {
     stage('Run Local Tests') {
       echo "Starting local UI Tests"
       sh "mkdir allure-results"
-      sh "./app build_tests"
+      sh "./test.sh build-tests"
       sh "docker network create ${network}"
-      status = sh([script: "./app jenkins_test", returnStatus: true])
+      status = sh([script: "./test.sh ui-tests jenkins", returnStatus: true])
 
       allure includeProperties: false, jdk: '', results: [[path: "allure-results"]]
 
@@ -40,7 +40,7 @@ node('aws-slave') {
 
       stage('Run Staging Tests') {
         echo "Starting staging UI tests"
-        status = sh([script: "./app test_ui staging", returnStatus: true])
+        status = sh([script: "./test.sh ui-tests staging", returnStatus: true])
 
         allure includeProperties: false, jdk: '', results: [[path: "allure-results"]]
 
@@ -67,7 +67,7 @@ if (deployToProd) {
   node('aws-slave') {
     stage('Run Production Tests') {
       echo "Starting production UI tests"
-      status = sh([script: "./app test_ui production", returnStatus: true])
+      status = sh([script: "./test.sh ui-tests production", returnStatus: true])
 
       if (status != 0) {
         error "UI tests failed."
