@@ -28,18 +28,18 @@ function help() {
   usage
 }
 
-function build-tests() {
+function build_tests() {
   docker build --build-arg "BROWSER=chrome76" -t zava/ui-tests:cypress -f Dockerfile .
 }
 
-function ui-tests() {
+function runDockerLocalTests() {
   docker run -v "$(pwd):/app" --name="${APP_NAME}" --network="${NETWORK}" -p $DEV_PORT $CLIENT_IMAGE npm run ui
   docker run -v "$(pwd):/e2e" -w "/e2e" --network="${NETWORK}" "zava/ui-tests:cypress" sh -c "npm run cypress:test:jenkins"
   docker stop ${APP_NAME}
   docker rm ${APP_NAME}
 }
 
-function runDockerTests() {
+function ui_tests() {
   if [[ $2 == 'jenkins' ]]; then 
     runDockerLocalTests
   else
