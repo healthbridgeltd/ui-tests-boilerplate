@@ -19,7 +19,7 @@ function usage() {
   echo "   help             prints this message"
   echo ""
   echo "Testing commands:"
-  echo "   build-tests    bulidl the ui-tests docker container"
+  echo "   build-tests    build the ui-tests docker container"
   echo "   ui-tests [PARAMS]   Run UI tests <jenkins|local|staging|prod>"
   exit 1
 }
