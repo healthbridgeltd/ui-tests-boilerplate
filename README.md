@@ -97,7 +97,7 @@ ui-tests [PARAMS]   run ui tests <standalone|local|staging|prod>
 
 ```
 ### NPM Commands
-Once the tests have been set up, we can either run them using the Cypress UI as shown above with: 
+Once the tests have been set up, we can run them with the Cypress UI: 
 ```bash
 npm run cypress:open:{environment}
 ```
