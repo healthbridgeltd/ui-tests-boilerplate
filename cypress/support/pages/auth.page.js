@@ -1,7 +1,7 @@
 const email = '#email'
 const password = '#password'
-const submit = '[type="submit"]'
-const dashboard = '[ui-sref="dashboard"]'
+const submit = '#submit'
+const dashboard = '#dashboard'
 
 export default class AuthPage {
   static goTo () {
