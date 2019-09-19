@@ -2,11 +2,11 @@
 Boilerplate for adding Cypress test framework to any project.
 
 ## Summary
-This boilerplate uses Cypress with Cucumber and Docker support for writing integration and e2e ui tests. The main focus on how to incorporate it into a continuous integration or continous deployment pipeline.
+This boilerplate uses Cypress with Cucumber and Docker support for writing integration and end-to-end UI tests. The main focus on how to incorporate it into a continuous integration or continous deployment pipeline.
 
 ## Important Notes
 ### Cypress and Docker
-Since Cypress install dependecies based on the OS being used we recommend keeping an eye on the npm packages that are being mounted as they will likely need reinstalling. We get around this by installing Cypress on build in the pipeline.
+Since Cypress installs it's dependecies based on the OS being used; we recommend keeping an eye on the npm packages that are being mounted, as they will likely need reinstalling if you switch between docker OSs. We get around this by installing Cypress during the pipeline execution, with Dockerfile.cypress.
 
 ### CI/CD Tools
 Currently this is only written for Jenkins. Though we plan to cover CodePipeline AWS. Feel free to include any other pipeline examples.
@@ -22,7 +22,7 @@ cd ui-tests-boilerplate
 npm install
 npm run cypress:open:local
 ```
-Make sure to set the urls of the environments to wish to point Cypress at. The json files are stored in the `config` directory.
+Make sure to set the urls of the environments you want Cypress to point at. The json files are stored in the `cypress/config` directory.
 
 ```json
 {
@@ -41,7 +41,7 @@ Scenario: Login
   When they complete the "login" form
   Then their account dasboard should be displayed
 ```
-Ideally we try to keep this high-level so we can reuse it and it is easy to understand by business.
+Ideally we try to keep this high-level so we can reuse it and keep it easy to understand for the business.
 Next we need to translate this into steps:
 ```javascript
 import { Given, When, Then } from 'cypress-cucumber-preprocessor/steps'
@@ -53,7 +53,7 @@ Given(/^a patient is on the "([^"]*)" page$/, (page) => {
   }
 })
 
-When(/^they complete the login form$/, () =>{
+When(/^they complete the "([^"]*)" form$/, () =>{
   Auth.completeLogin()
 })
 
@@ -61,7 +61,7 @@ Then(/^their account dasboard should be displayed$/, () =>{
   Auth.dashboardIsDisplayed()
 })
 ```
-The steps are ideally a small set or singular actions that are either calling the driver directly or call a page object. We use page objects as we have multiple tests running on each page and it removes a lot of duplication.
+The steps are ideally single (or a small set of) actions, that are either calling the driver directly or calling a page object. We use page objects as we have multiple tests running on each page of the application and it removes a lot of duplication.
 ```javascript
 const email = '#email'
 const password = '#password'
@@ -84,9 +84,9 @@ export default class AuthPage {
   }
 }
 ```
-Here we have set up the actual actions that need to carried out by the Cypress driver. While storing out element value as constants. Ideally we can also store the personal information in a json or js object if need be. But for this example we have stuck with the basics.
+Here we have set up the actual actions that need to carried out by the Cypress driver. While storing our element values as constants. Ideally we can also store the personal information in a JSON or JavaScript object if need be. But for this example we have stuck to the basics.
 ## Running the Tests
-Once the tests have been set up we can either run them using the Cypress UI as shown above with: 
+Once the tests have been set up, we can either run them using the Cypress UI as shown above with: 
 ```bash
 npm run cypress:open:{environment}
 ```
