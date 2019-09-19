@@ -6,6 +6,7 @@ set -e
 CLIENT_SERVICE="app"
 APP_NAME="cypress-ui"
 CLIENT_IMAGE="hbl/appname"
+CLIENT_PORT="8090:8090"
 NETWORK="ui-test-net"
 
 function usage() {
@@ -28,22 +29,64 @@ function help() {
   usage
 }
 
-function build_tests() {
-  docker build --build-arg "BROWSER=chrome76" -t zava/ui-tests:cypress -f Dockerfile .
+# === Docker Utilities === #
+
+function createNetwork() {
+  docker network create ${NETWORK}
 }
 
-function runDockerLocalTests() {
-  docker run -v "$(pwd):/app" --name="${APP_NAME}" --network="${NETWORK}" -p $DEV_PORT $CLIENT_IMAGE npm run ui
-  docker run -v "$(pwd):/e2e" -w "/e2e" --network="${NETWORK}" "zava/ui-tests:cypress" sh -c "npm run cypress:test:jenkins"
+function networkWrapper() {
+  echo "=== Setting up network ==="
+  if createNetwork; then
+    echo "Network: ${NETWORK} created"
+  else
+    echo "Network: ${NETWORK} already exists"
+  fi
+}
+
+function cleanup() {
   docker stop ${APP_NAME}
-  docker rm ${APP_NAME}
+}
+
+# === Cypress Test Functions === #
+
+function build_tests() {
+  docker build --build-arg "BROWSER=chrome76" -t zava/ui-tests:cypress -f Dockerfile.cypress .
+}
+
+function dockerTests() {
+  docker run -v "$(pwd):/e2e" -w "/e2e" --network="${NETWORK}" "zava/ui-tests:cypress" sh -c "npm run cypress:test:$1"
+}
+
+function dockerTestsNoNet() {
+  docker run -v "$(pwd):/e2e" -w "/e2e" "zava/ui-tests:cypress" sh -c "npm run cypress:test:$1"
+}
+
+function runStandaloneTests() {
+  docker run -d --rm -v "$(pwd):/app" --name="${APP_NAME}" --network="${NETWORK}" -p ${CLIENT_PORT} $CLIENT_IMAGE npm run serve
+  dockerTests $1
+}
+
+function runTestWrapper() {
+  networkWrapper
+  echo "=== Running Tests ==="
+  if runStandaloneTests $1; then
+    echo "Tests Passed"
+    cleanup
+  else
+    cleanup
+    echo "Tests Failed"
+    exit 1
+  fi
 }
 
 function ui_tests() {
-  if [[ $2 == 'jenkins' ]]; then 
-    runDockerLocalTests
+  if [[ $1 == 'jenkins' ]]; then 
+    runTestWrapper $1
+  elif [[ $1 == 'local' ]]; then
+    dockerTests $1
   else
-    docker run -v "$(pwd):/e2e" -w "/e2e" "zava/ui-tests:cypress" sh -c "npm run cypress:test:$2"
+    dockerTestsNoNet $1
   fi
 }
 
