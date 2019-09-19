@@ -7,7 +7,7 @@ Given(/^a patient is on the "([^"]*)" page$/, (page) => {
   }
 })
 
-When(/^they complete the login form$/, () =>{
+When(/^they complete the "([^"]*)" form$/, () =>{
   Auth.completeLogin()
 })
 
