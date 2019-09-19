@@ -85,16 +85,22 @@ export default class AuthPage {
 }
 ```
 Here we have set up the actual actions that need to carried out by the Cypress driver. While storing out element value as constants. Ideally we can also store the personal information in a json or js object if need be. But for this example we have stuck with the basics.
-
+## Running the Tests
 Once the tests have been set up we can either run them using the Cypress UI as shown above with: 
-```
+```bash
 npm run cypress:open:{environment}
 ```
 We can also run it using the headless electron browser:
-```
+```bash
 npm run cypress:test:{environment}
 ```
 or using docker: 
-```
+```bash
 sh app test_ui {environment}
 ```
+## Reporting
+We are using the allure mocha plugin for creating our reports since it offers us great support with Jenkins. To generate the report we can simply run:
+```bash
+npm run cypress:report
+```
+This will open up a browser similar to this:
