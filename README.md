@@ -86,7 +86,7 @@ export default class AuthPage {
 ```
 Here we have set up the actual actions that need to carried out by the Cypress driver. While storing our element values as constants. Ideally we can also store the personal information in a JSON or JavaScript object if need be. But for this example we have stuck to the basics.
 ## Running the Tests
-### test.sh Commands
+### `test.sh` Commands
 ```bash
 General Commands:
 help                prints this message
