@@ -6,7 +6,7 @@ This boilerplate uses Cypress with Cucumber and Docker support for writing integ
 
 ## Important Notes
 ### Cypress and Docker
-Since Cypress installs it's dependecies based on the OS being used; we recommend keeping an eye on the npm packages that are being mounted, as they will likely need reinstalling if you switch between docker OSs. We get around this by installing Cypress during the pipeline execution, with Dockerfile.cypress.
+Since Cypress installs its dependecies based on the OS being used; we recommend keeping an eye on the npm packages that are being mounted, as they will likely need reinstalling if you switch between docker OSs. We get around this by installing Cypress during the pipeline execution, with Dockerfile.cypress.
 
 ### CI/CD Tools
 Currently this is only written for Jenkins. Though we plan to cover CodePipeline AWS. Feel free to include any other pipeline examples.
