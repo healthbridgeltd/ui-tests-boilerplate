@@ -104,4 +104,4 @@ We are using the allure mocha plugin for creating our reports since it offers us
 npm run cypress:report
 ```
 This will open up a browser similar to this:
-[Allure](docs/allure.png)
+![Allure](docs/allure.png)
