@@ -1,5 +1,5 @@
 {
-  "baseUrl": "https://zavamed.com/uk",
+  "baseUrl": "https://www.example.com",
   "env": {
     "name": "production",
     "mocks": false

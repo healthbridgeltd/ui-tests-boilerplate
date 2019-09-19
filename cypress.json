@@ -1,5 +1,5 @@
 {
-  "baseUrl": "https://zava-preview.zavamed.com/uk",
+  "baseUrl": "https://www.example.com",
   "ignoreTestFiles": "*.js",
   "chromeWebSecurity": false,
   "video": false,

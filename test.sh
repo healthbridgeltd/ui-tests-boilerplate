@@ -1,11 +1,10 @@
 #!/usr/bin/env bash
 # utility script to simplify running of the ui-tests in docker
-# It is meant to be run from the project root directory
 set -e
 
 CLIENT_SERVICE="app"
 APP_NAME="cypress-ui"
-CLIENT_IMAGE="hbl/appname"
+CLIENT_IMAGE="appname"
 CLIENT_PORT="8090:8090"
 NETWORK="ui-test-net"
 
@@ -21,7 +20,7 @@ function usage() {
   echo ""
   echo "Testing commands:"
   echo "   build-tests    build the ui-tests docker container"
-  echo "   ui-tests [PARAMS]   Run UI tests <jenkins|local|staging|prod>"
+  echo "   ui-tests [PARAMS]   Run UI tests <standalone|local|staging|prod>"
   exit 1
 }
 
@@ -51,15 +50,15 @@ function cleanup() {
 # === Cypress Test Functions === #
 
 function build_tests() {
-  docker build --build-arg "BROWSER=chrome76" -t zava/ui-tests:cypress -f Dockerfile.cypress .
+  docker build --build-arg "BROWSER=chrome76" -t ui-tests:cypress -f Dockerfile.cypress .
 }
 
 function dockerTests() {
-  docker run -v "$(pwd):/e2e" -w "/e2e" --network="${NETWORK}" "zava/ui-tests:cypress" sh -c "npm run cypress:test:$1"
+  docker run -v "$(pwd):/e2e" -w "/e2e" --network="${NETWORK}" "ui-tests:cypress" sh -c "npm run cypress:test:$1"
 }
 
 function dockerTestsNoNet() {
-  docker run -v "$(pwd):/e2e" -w "/e2e" "zava/ui-tests:cypress" sh -c "npm run cypress:test:$1"
+  docker run -v "$(pwd):/e2e" -w "/e2e" "ui-tests:cypress" sh -c "npm run cypress:test:$1"
 }
 
 function runStandaloneTests() {
@@ -81,7 +80,7 @@ function runTestWrapper() {
 }
 
 function ui_tests() {
-  if [[ $1 == 'jenkins' ]]; then 
+  if [[ $1 == 'standalone' ]]; then 
     runTestWrapper $1
   elif [[ $1 == 'local' ]]; then
     dockerTests $1
