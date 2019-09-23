@@ -47,7 +47,7 @@ Next we need to translate this into steps:
 import { Given, When, Then } from 'cypress-cucumber-preprocessor/steps'
 import Auth from '../pages/auth.page'
 
-Given(/^a patient is on the "([^"]*)" page$/, (page) => {
+Given(/^a user is on the "([^"]*)" page$/, (page) => {
   if (page === 'auth') {
     Auth.goTo()
   }
