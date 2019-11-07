@@ -1,13 +1,11 @@
 import { Given, When, Then } from 'cypress-cucumber-preprocessor/steps'
 import Auth from '../pages/auth.page'
 
-Given(/^a user is on the "([^"]*)" page$/, (page) => {
-  if (page === 'auth') {
-    Auth.goTo()
-  }
+Given(/^a user is on the auth page$/, () => {
+  Auth.goTo()
 })
 
-When(/^they complete the "([^"]*)" form$/, () =>{
+When(/^they complete the login form$/, () =>{
   Auth.completeLogin()
 })
 
