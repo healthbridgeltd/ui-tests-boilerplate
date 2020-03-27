@@ -7,6 +7,7 @@ APP_NAME="cypress-ui"
 CLIENT_IMAGE="appname"
 CLIENT_PORT="8090:8090"
 NETWORK="ui-test-net"
+CYPRESS_IMAGE="${CYPRESS_IMAGE:-cypress/included:4.2.0}"
 
 function usage() {
   if [ -n "$1" ]; then
@@ -49,20 +50,16 @@ function cleanup() {
 
 # === Cypress Test Functions === #
 
-function build_tests() {
-  docker build --build-arg "BROWSER=chrome76" -t ui-tests:cypress -f Dockerfile.cypress .
-}
-
 function dockerTests() {
-  docker run -v "$(pwd):/e2e" -w "/e2e" --network="${NETWORK}" "ui-tests:cypress" sh -c "npm run cypress:test:$1"
+  docker run -v "$(pwd):/e2e" -w "/e2e" --network="${NETWORK}" "${CYPRESS_IMAGE}" sh -c "npm run cypress:test:$1"
 }
 
 function dockerTestsNoNet() {
-  docker run -v "$(pwd):/e2e" -w "/e2e" "ui-tests:cypress" sh -c "npm run cypress:test:$1"
+  docker run -v "$(pwd):/e2e" -w "/e2e" "${CYPRESS_IMAGE}" sh -c "npm run cypress:test:$1"
 }
 
 function runStandaloneTests() {
-  docker run -d --rm -v "$(pwd):/app" --name="${APP_NAME}" --network="${NETWORK}" -p ${CLIENT_PORT} $CLIENT_IMAGE npm run serve
+  docker run -d --rm -w "/app" -v "$(pwd):/app" --name="${APP_NAME}" --network="${NETWORK}" -p ${APP_PORT} ${CLIENT_IMAGE} npm run serve
   dockerTests $1
 }
 

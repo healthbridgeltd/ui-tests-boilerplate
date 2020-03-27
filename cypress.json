@@ -1,7 +1,9 @@
 {
   "baseUrl": "https://www.example.com",
+  "integrationFolder": "cypress/features",
   "ignoreTestFiles": "*.js",
+  "testFiles": "**/*.{feature,features}",
   "chromeWebSecurity": false,
-  "video": false,
+  "video": true,
   "reporter": "mocha-allure-reporter"
 }

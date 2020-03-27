@@ -1,18 +1,15 @@
 const cucumber = require('cypress-cucumber-preprocessor').default
-const fs = require('fs-extra')
-const path = require('path')
 
-function getConfigurationByFile (file) {
-  const pathToConfigFile = path.resolve('./cypress', 'config', `${file}.json`)
-
-  return fs.readJsonSync(pathToConfigFile)
+function getConfigurationByFile (environment) {
+  return Object.assign({}, require(`../config/${environment}.js`))
 }
 
-// plugins file
 module.exports = (on, config) => {
   // accept a configFile value or use development by default
-  const file = config.env.configFile || 'local'
+  const environment = config.env.configFile || 'local'
+  console.log(config.env.configFile)
+  console.log(config.env.locale)
   on('file:preprocessor', cucumber())
 
-  return getConfigurationByFile(file)
+  return getConfigurationByFile(environment)
 }
