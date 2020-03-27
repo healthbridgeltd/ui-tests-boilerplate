@@ -59,7 +59,7 @@ function dockerTestsNoNet() {
 }
 
 function runStandaloneTests() {
-  docker run -d --rm -v "$(pwd):/app" --name="${APP_NAME}" --network="${NETWORK}" -p ${CLIENT_PORT} $CLIENT_IMAGE npm run serve
+  docker run -d --rm -w "/app" -v "$(pwd):/app" --name="${APP_NAME}" --network="${NETWORK}" -p ${APP_PORT} ${CLIENT_IMAGE} npm run serve
   dockerTests $1
 }
 
