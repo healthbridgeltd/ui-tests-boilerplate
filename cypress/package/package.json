@@ -1,0 +1,9 @@
+{
+  "name": "@zava-tests/example",
+  "version": "1.1.0",
+  "description": "Cucumber Step Definitions and Page Objects for Example",
+  "main": "index.js",
+  "dependencies": {
+    "cypress-cucumber-preprocessor": "2.5.0"
+  }
+}
