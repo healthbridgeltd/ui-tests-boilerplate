@@ -1,0 +1,18 @@
+#!/bin/sh
+dir='cypress/package'
+exec < /dev/tty
+
+if [[ "$(git status $dir --short)" ]]; then
+  PS3='Select version [1/2/3]: ' 
+  packageVersion=("major" "minor" "patch")
+  select versionOpt in "${packageVersion[@]}"
+  do
+    cd "./$dir"
+    npm version $versionOpt
+    cd "../../"
+    git add $dir/package.json
+    exit 0
+  done
+else
+  echo "Skipping Version Bump"
+fi

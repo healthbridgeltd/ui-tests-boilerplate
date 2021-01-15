@@ -33,6 +33,12 @@ Make sure to set the urls of the environments you want Cypress to point at. The 
   }
 }
 ```
+## Git Hooks for UI Tests
+Run the following command from the root directory of the repository:
+```
+git config core.hooksPath hooks/
+```
+This will also you to auto increment the test versions, otherwise you will have to manually update the version every time a test is updated.
 ## Writing Tests with Cucumber
 The first step with writing tests in cucumber is to work out what the feature is you need. Followed by the behaviour that is expected. With Cucumber you write it in Gherkin Script, as shown below:
 ```gherkin
