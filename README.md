@@ -114,6 +114,7 @@ npm run cypress:test:{environment}
 ## Reporting
 We are using the allure mocha plugin for creating our reports since it offers us great support with Jenkins. To generate the report we can simply run:
 ```bash
+npm install -g allure-commandline --save-dev
 npm run cypress:report
 ```
 This will open up a browser similar to this:
