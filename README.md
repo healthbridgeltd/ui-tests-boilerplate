@@ -19,6 +19,11 @@ The setup is pretty straightforward:
 ```bash
 git clone https://github.com/healthbridgeltd/ui-tests-boilerplate
 cd ui-tests-boilerplate
+// We choose to install it locally given we work with the cypress:included docker container
+// and we have multiple repos that use cypress. You always have the option to include it in
+// the package.json if required.
+npm install -g cypress
+
 npm install
 npm run cypress:open:local
 ```
