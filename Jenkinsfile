@@ -13,6 +13,8 @@ node('worker') {
 
   stage('Run Local Tests') {
     echo "Starting local UI Tests"
+    // mkdir is needed as otherwise docker will create the reports
+    // folder with different permissions which jenkins can't access
     sh "mkdir allure-results"
     sh "./test.sh build_tests"
     status = sh([script: "./test.sh ui_tests jenkins", returnStatus: true])
@@ -20,6 +22,8 @@ node('worker') {
     allure includeProperties: false, jdk: '', results: [[path: "allure-results"]]
 
     if (status != 0) {
+      // Depending on pipeline setup you may wish to send a notification here
+      // or catch it in a later part of the pipeline.
       error "UI tests failed."
     }
   }
