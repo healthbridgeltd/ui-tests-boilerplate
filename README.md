@@ -47,7 +47,7 @@ This will also you to auto increment the test versions, otherwise you will have 
 ## Writing Tests with Cucumber
 The first step with writing tests in cucumber is to work out what the feature is you need. Followed by the behaviour that is expected. With Cucumber you write it in Gherkin Script, as shown below:
 ```gherkin
-// example.feature
+# example.feature
 Scenario: Login
   Given a user is on the "auth" page 
   When they complete the "login" form
