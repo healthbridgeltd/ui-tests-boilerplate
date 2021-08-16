@@ -1,7 +1,5 @@
 {
-  "name": "ui-tests-boilerplate",
-  "version": "0.1.0",
-  "private": false,
+  ...
   "scripts": {
     "cypress:open:local": "CYPRESS_ENV=true cypress open",
     "cypress:open:staging": "CYPRESS_ENV=true cypress open --env configFile=staging",
