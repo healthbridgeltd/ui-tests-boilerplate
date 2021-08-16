@@ -4,10 +4,10 @@
     "cypress:open:local": "CYPRESS_ENV=true cypress open",
     "cypress:open:staging": "CYPRESS_ENV=true cypress open --env configFile=staging",
     "cypress:open:production": "CYPRESS_ENV=true cypress open --env configFile=production",
-    "cypress:test:local": "CYPRESS_ENV=true cypress run --spec **/*.feature",
-    "cypress:test:staging": "CYPRESS_ENV=true cypress run  --spec **/*.feature --env configFile=staging",
-    "cypress:test:production": "CYPRESS_ENV=true cypress run --spec **/*.feature --env configFile=production",
-    "cypress:test:jenkins": "CYPRESS_ENV=true cypress run --spec **/*.feature --env configFile=jenkins",
+    "cypress:test:local": "CYPRESS_ENV=true ./node_modules/.bin/cypress-tags run --env TAGS=\"@<define-tag>\"",
+    "cypress:test:jenkins": "NO_COLOR=1 CYPRESS_ENV=true ./node_modules/.bin/cypress-tags run --env TAGS=\"@<define-tag>\" --env configFile=jenkins",
+    "cypress:test:staging": "NO_COLOR=1 CYPRESS_ENV=true ./node_modules/.bin/cypress-tags run --env TAGS=\"@e2e\" --env configFile=staging",
+    "cypress:test:production": "NO_COLOR=1 CYPRESS_ENV=true ./node_modules/.bin/cypress-tags run --env TAGS=\"@e2e\" --env configFile=production",
     "cypress:report": "allure generate allure-results --clean -o allure-report && allure open allure-report"
   },
   "dependencies": {
@@ -20,6 +20,7 @@
     "mocha-allure-reporter": "1.4.0"
   },
   "cypress-cucumber-preprocessor": {
-    "nonGlobalStepDefinitions": false
+    "nonGlobalStepDefinitions": false,
+    "commonPath": "cypress/support/step_definitions"
   }
 }
