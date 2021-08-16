@@ -109,8 +109,8 @@ General Commands:
 help                prints this message
 
 Testing commands:
-build-tests         build the ui-tests docker container
-ui-tests [PARAMS]   run ui tests <standalone|local|staging|prod>
+build_tests         build the ui-tests docker container
+ui_tests [PARAMS]   run ui tests <standalone|local|staging|prod>
 
 ```
 ### NPM Commands
