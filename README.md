@@ -119,3 +119,9 @@ npm run cypress:report
 ```
 This will open up a browser similar to this:
 ![Allure](docs/allure.png)
+
+## Edge Cases
+### No Permissions to run test.sh
+If the test.sh file is missing permissions when you try to run it. You might see something like this:
+```line 1: ./cypress/test.sh: Permission denied```
+Then you need to run `chmod +x ./cypress/test.sh` this will allow the .sh file to be executable.
