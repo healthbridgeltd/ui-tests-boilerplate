@@ -20,8 +20,8 @@ function usage() {
   echo "   help             prints this message"
   echo ""
   echo "Testing commands:"
-  echo "   build-tests    build the ui-tests docker container"
-  echo "   ui-tests [PARAMS]   Run UI tests <standalone|local|staging|prod>"
+  echo "   build_tests    build the ui-tests docker container"
+  echo "   ui_tests [PARAMS]   Run UI tests <standalone|local|staging|prod>"
   exit 1
 }
 
@@ -49,6 +49,10 @@ function cleanup() {
 }
 
 # === Cypress Test Functions === #
+
+function build_tests() {
+  docker run -v "$(pwd):/e2e" -w "/e2e" "${CYPRESS_IMAGE}" sh -c "npm install"
+}
 
 function dockerTests() {
   docker run -v "$(pwd):/e2e" -w "/e2e" --network="${NETWORK}" "${CYPRESS_IMAGE}" sh -c "npm run cypress:test:$1"
