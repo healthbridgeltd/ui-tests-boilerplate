@@ -40,7 +40,7 @@ node('worker') {
 
       if (status != 0) {
         error "UI tests failed."
-        withAWS(region: 'eu-west', role: 'arn:aws:iam::XXXXXXXXXXX:role/role_name') {
+        withAWS(region: 'eu-west-1', role: 'arn:aws:iam::XXXXXXXXXXX:role/role_name') {
           awsIdentity()
           s3Upload(
             file: 'cypress/videos',
@@ -62,7 +62,7 @@ node('worker') {
 
         if (status != 0) {
           error "UI tests failed."
-          withAWS(region: 'eu-west', role: 'arn:aws:iam::XXXXXXXXXXX:role/role_name') {
+          withAWS(region: 'eu-west-1', role: 'arn:aws:iam::XXXXXXXXXXX:role/role_name') {
             awsIdentity()
             s3Upload(
               file: 'cypress/videos',
