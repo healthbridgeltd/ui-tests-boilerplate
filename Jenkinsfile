@@ -44,7 +44,7 @@ node('worker') {
           awsIdentity()
           s3Upload(
             file: 'cypress/videos',
-            bucket: 'test-reports',
+            bucket: 'stg-ui-test-reports',
             path: "path/to/dir"
           )
         }
@@ -66,7 +66,7 @@ node('worker') {
             awsIdentity()
             s3Upload(
               file: 'cypress/videos',
-              bucket: 'test-reports',
+              bucket: 'stg-ui-test-reports',
               path: "path/to/dir"
             )
           }
