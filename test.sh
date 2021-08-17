@@ -51,15 +51,15 @@ function cleanup() {
 # === Cypress Test Functions === #
 
 function build_tests() {
-  docker run -v "$(pwd):/e2e" -w "/e2e" "${CYPRESS_IMAGE}" sh -c "npm install"
+  docker run -v "$(pwd):/e2e" -w "/e2e" --entrypoint="" "${CYPRESS_IMAGE}" sh -c "npm install"
 }
 
 function dockerTests() {
-  docker run -v "$(pwd):/e2e" -w "/e2e" --network="${NETWORK}" "${CYPRESS_IMAGE}" sh -c "npm run cypress:test:$1"
+  docker run -v "$(pwd):/e2e" -w "/e2e" --entrypoint="" --network="${NETWORK}" "${CYPRESS_IMAGE}" sh -c "npm run cypress:test:$1"
 }
 
 function dockerTestsNoNet() {
-  docker run -v "$(pwd):/e2e" -w "/e2e" "${CYPRESS_IMAGE}" sh -c "npm run cypress:test:$1"
+  docker run -v "$(pwd):/e2e" -w "/e2e" --entrypoint="" "${CYPRESS_IMAGE}" sh -c "npm run cypress:test:$1"
 }
 
 function runStandaloneTests() {
