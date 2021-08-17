@@ -13,7 +13,7 @@
   "dependencies": {
     "babel-core": "7.0.0-bridge.0",
     "babel-eslint": "10.0.1",
-    "cypress-cucumber-preprocessor": "1.19.1",
+    "cypress-cucumber-preprocessor": "4.2.0",
     "eslint": "5.16.0",
     "mocha": "6.2.0",
     "mocha-allure-reporter": "1.4.0"
