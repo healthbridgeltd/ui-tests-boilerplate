@@ -10,18 +10,15 @@ NETWORK="ui-test-net"
 CYPRESS_IMAGE="${CYPRESS_IMAGE:-cypress/included:4.2.0}"
 
 function usage() {
-  if [ -n "$1" ]; then
-    error_msg "$1"
-    echo ""
-  fi
   echo "$0 <commands>"
   echo ""
   echo "General Commands:"
-  echo "   help             prints this message"
+  echo "   help                prints this message"
   echo ""
   echo "Testing commands:"
-  echo "   build_tests    build the ui-tests docker container"
+  echo "   build_tests         build the ui-tests docker container"
   echo "   ui_tests [PARAMS]   Run UI tests <standalone|local|staging|prod>"
+  echo "   vis_diff            Run visual difference tests"
   exit 1
 }
 
@@ -65,6 +62,11 @@ function dockerTestsNoNet() {
 function runStandaloneTests() {
   docker run -d --rm -w "/app" -v "$(pwd):/app" --name="${APP_NAME}" --network="${NETWORK}" -p ${APP_PORT} ${CLIENT_IMAGE} npm run serve
   dockerTests $1
+}
+
+function visual_diff() {
+  docker run -v "$(pwd):/e2e" -w "/e2e" --entrypoint="" "${CYPRESS_IMAGE}" sh -c "npm run visdiff:run"
+  docker run -v "$(pwd):/e2e" -w "/e2e" --entrypoint="" "${CYPRESS_IMAGE}" sh -c "npm run visdiff:verify"
 }
 
 function runTestWrapper() {

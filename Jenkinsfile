@@ -34,6 +34,15 @@ node('worker') {
 
     stage('Run Staging Tests') {
       echo "Starting staging UI tests"
+      status = sh([script: "./test.sh vis_diff", returnStatus: true])
+
+      if (status != 0) {
+        error "Visual difference tests failed."
+      }
+    }
+
+    stage('Run Staging Tests') {
+      echo "Starting staging UI tests"
       status = sh([script: "./test.sh ui_tests staging", returnStatus: true])
 
       allure includeProperties: false, jdk: '', results: [[path: "allure-results"]]
