@@ -1,7 +1,14 @@
+@Library('jenkins-shared-libraries@3.7.1')
+import com.zavamed.Tests
+
+tests = new Tests(this)
+
 def branchName = "${env.BRANCH_NAME}"
+def projectName = "<projectName>"
+def notificationSlackChannel = "#jenkins-<team>"
+def cypressImage = "cypress/included:7.4.0" // at least 7.4.0
 def isMasterBranch=(branchName == 'master')
 def deployToProd = false
-def network = "ui-test-net"
 
 node('worker') {
 
@@ -10,20 +17,27 @@ node('worker') {
   }
 
   // ...
-
+  
+  /**
+  * Optional: Only if the app supports local testing. 
+  * This allows us to get feedback before merging to master.
+  */
   stage('Run Local Tests') {
     echo "Starting local UI Tests"
-    // mkdir is needed as otherwise docker will create the reports
-    // folder with different permissions which jenkins can't access
+    /**
+    * mkdir is needed as otherwise docker will create the reports
+    * folder with different permissions which jenkins can't access
+    */
     sh "mkdir allure-results"
-    sh "./test.sh build_tests"
     status = sh([script: "./test.sh ui_tests jenkins", returnStatus: true])
 
     allure includeProperties: false, jdk: '', results: [[path: "allure-results"]]
 
     if (status != 0) {
-      // Depending on pipeline setup you may wish to send a notification here
-      // or catch it in a later part of the pipeline.
+      /**
+      * Depending on pipeline setup you may wish to send a notification here
+      * or catch it in a later part of the pipeline.
+      */
       error "UI tests failed."
     }
   }
@@ -32,55 +46,38 @@ node('worker') {
     
     // ...
 
-    stage('Run Staging Tests') {
-      echo "Starting staging UI tests"
-      status = sh([script: "./test.sh vis_diff", returnStatus: true])
+    // We can now use jenkins-codebuild for more stable testing.
+    node('jenkins-codebuild') {
+      tests.runVisualDifferenceTests(
+        environment: 'staging',
+        image: cypressImage,
+        channel: notificationSlackChannel,
+        project: projectName,
+        command: 'visdiff:test',
+        percyToken: percyToken
+      )
 
-      if (status != 0) {
-        error "Visual difference tests failed."
-      }
-    }
-
-    stage('Run Staging Tests') {
-      echo "Starting staging UI tests"
-      status = sh([script: "./test.sh ui_tests staging", returnStatus: true])
-
-      allure includeProperties: false, jdk: '', results: [[path: "allure-results"]]
-
-      if (status != 0) {
-        error "UI tests failed."
-        withAWS(region: 'eu-west-1', role: 'arn:aws:iam::XXXXXXXXXXX:role/role_name') {
-          awsIdentity()
-          s3Upload(
-            file: 'cypress/videos',
-            bucket: 'stg-ui-test-reports',
-            path: "path/to/dir"
-          )
-        }
-      }
+      tests.runFunctionalTests(
+        environment: 'staging',
+        image: cypressImage,
+        channel: notificationSlackChannel,
+        project: projectName,
+        command: 'cypress:test:staging'
+      )
     }
   }
 
   // ...
 
   if (deployToProd) {
-    node('aws-slave') {
-      stage('Run Production Tests') {
-        echo "Starting production UI tests"
-        status = sh([script: "./test.sh ui_tests production", returnStatus: true])
-
-        if (status != 0) {
-          error "UI tests failed."
-          withAWS(region: 'eu-west-1', role: 'arn:aws:iam::XXXXXXXXXXX:role/role_name') {
-            awsIdentity()
-            s3Upload(
-              file: 'cypress/videos',
-              bucket: 'stg-ui-test-reports',
-              path: "path/to/dir"
-            )
-          }
-        }
-      }
+    node('jenkins-codebuild') {
+      tests.runFunctionalTests(
+        environment: 'production',
+        image: cypressImage,
+        channel: notificationSlackChannel,
+        project: projectName,
+        command: 'cypress:test:production'
+      )
     }
   }
 
