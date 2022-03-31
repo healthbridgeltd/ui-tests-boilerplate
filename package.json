@@ -9,8 +9,8 @@
     "cypress:test:staging": "NO_COLOR=1 CYPRESS_ENV=true ./node_modules/.bin/cypress-tags run --env TAGS=\"@e2e\" --env configFile=staging",
     "cypress:test:production": "NO_COLOR=1 CYPRESS_ENV=true ./node_modules/.bin/cypress-tags run --env TAGS=\"@e2e\" --env configFile=production",
     "cypress:report": "allure generate allure-results --clean -o allure-report && allure open allure-report",
-    "visdiff:run": "NO_COLOR=1 CYPRESS_ENV=true percy exec -- cypress run --spec **/visual-diffs/*.feature --env configFile=staging",
-    "visdiff:verify": "percy build:wait --fail-on-changes"
+    "visdiff:run": "NO_COLOR=1 CYPRESS_ENV=true percy exec -- cypress run --spec **/vizdiffs/*.feature --env configFile=staging",
+    "visdiff:verify": "percy build:wait"
   },
   "dependencies": {
     "babel-core": "7.0.0-bridge.0",
