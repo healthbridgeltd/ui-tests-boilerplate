@@ -3,7 +3,7 @@ const password = '#password'
 const submit = '#submit'
 const dashboard = '#dashboard'
 
-export default class AuthPage {
+module.exports = class AuthPage {
   static goTo () {
     cy.visit('/auth')
   }

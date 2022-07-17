@@ -1,7 +1,5 @@
-module.exports = {
-  baseUrl: 'https://www.example.com',
-  env: {
-    name: 'production',
-    mocks: false
-  }
+module.exports.baseUrl = 'https://www.example.com'
+module.exports.env = {
+  name: 'production',
+  mocks: false
 }

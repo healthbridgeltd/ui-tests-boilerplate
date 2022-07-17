@@ -1,6 +1,6 @@
 {
   "name": "@zava-tests/example",
-  "version": "1.1.0",
+  "version": "1.0.0",
   "description": "Cucumber Step Definitions and Page Objects for Example",
   "main": "index.js"
 }

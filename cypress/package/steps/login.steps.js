@@ -1,16 +1,16 @@
-import { Given, When, Then } from 'cypress-cucumber-preprocessor/steps'
-import Auth from '../pages/auth.page'
+const { Given, When, Then } = require('@badeball/cypress-cucumber-preprocessor')
+const AuthPage = require('../pages/auth.page')
 
 Given(/^a user is on the "([^"]*)" page$/, (page) => {
   if (page === 'auth') {
-    Auth.goTo()
+    AuthPage.goTo()
   }
 })
 
 When(/^they complete the "([^"]*)" form$/, () =>{
-  Auth.completeLogin()
+  AuthPage.completeLogin()
 })
 
 Then(/^their account dashboard should be displayed$/, () =>{
-  Auth.dashboardIsDisplayed()
+  AuthPage.dashboardIsDisplayed()
 })

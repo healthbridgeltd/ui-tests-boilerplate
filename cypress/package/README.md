@@ -1,17 +1,10 @@
-# Assessment: Shared Steps and Pages
+# Example: Shared Steps and Pages
 ## Steps
-```js
-Given(/^a user is on the "([^"]*)" page$/, (page) => {
-  if (page === 'auth') {
-    Auth.goTo()
-  }
-})
+```feature
+a user is on the "auth" page$/
+they complete the "login" form$/
+their account dashboard should be displayed
 
-When(/^they complete the "([^"]*)" form$/, () =>{
-  Auth.completeLogin()
-})
-
-Then(/^their account dashboard should be displayed$/, () =>{
-  Auth.dashboardIsDisplayed()
-})
+#visual-diffs
+a screenshot should be taken
 ```

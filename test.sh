@@ -7,7 +7,7 @@ APP_NAME="cypress-ui"
 CLIENT_IMAGE="appname"
 CLIENT_PORT="8090:8090"
 NETWORK="ui-test-net"
-CYPRESS_IMAGE="${CYPRESS_IMAGE:-cypress/included:4.2.0}"
+CYPRESS_IMAGE="${CYPRESS_IMAGE:-cypress/included:10.3.0}"
 
 function usage() {
   echo "$0 <commands>"
