@@ -1,4 +1,4 @@
-@Library('jenkins-shared-libraries@3.7.1')
+@Library('jenkins-shared-libraries@4.6.7')
 import com.zavamed.Tests
 
 tests = new Tests(this)
@@ -6,7 +6,7 @@ tests = new Tests(this)
 def branchName = "${env.BRANCH_NAME}"
 def projectName = "<projectName>"
 def notificationSlackChannel = "#jenkins-<team>"
-def cypressImage = "cypress/included:7.4.0" // at least 7.4.0
+def cypressImage = "cypress/included:13.4.0"
 def isMasterBranch=(branchName == 'master')
 def deployToProd = false
 
