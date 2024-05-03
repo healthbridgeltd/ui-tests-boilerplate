@@ -1,5 +1,0 @@
-# This will need to be added to your build dockerfile to avoid the
-# issue mentioned below
-# https://github.com/cypress-io/cypress/issues/8283
-# EACCES: permission denied, mkdir '/root/.cache/Cypress'
-ENV CYPRESS_CACHE_FOLDER=/app/.cache/Cypress

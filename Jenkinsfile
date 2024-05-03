@@ -56,30 +56,31 @@ node('worker') {
         command: 'visdiff:test',
         percyToken: percyToken
       )
-
-      tests.runFunctionalTests(
-        environment: 'staging',
-        image: cypressImage,
-        channel: notificationSlackChannel,
-        project: projectName,
-        command: 'cypress:test:staging'
-      )
     }
+    runTests('staging')
   }
 
   // ...
 
   if (deployToProd) {
-    node('jenkins-codebuild') {
-      tests.runFunctionalTests(
-        environment: 'production',
-        image: cypressImage,
-        channel: notificationSlackChannel,
-        project: projectName,
-        command: 'cypress:test:production'
-      )
-    }
+    runTests('production')
   }
 
   // ...
+}
+
+def runTests(deploymentStage) {
+  node('jenkins-codebuild') {
+    checkout scm
+    
+    tests.runFunctionalTests(
+      environment: deploymentStage,
+      channel: notificationSlackChannel,
+      image: 'custom',
+      installPackages: false,
+      fullRepoVolume: false,
+      project: appName,
+      command: "cypress:test:${deploymentStage}"
+    )
+  }
 }
