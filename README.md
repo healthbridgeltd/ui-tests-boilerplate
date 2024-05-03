@@ -116,16 +116,15 @@ ui_tests [PARAMS]   run ui tests <standalone|local|staging|prod>
 ### NPM Commands
 Once the tests have been set up, we can run them with the Cypress UI: 
 ```bash
-npm run cypress:open:{environment}
+npm run --prefix ./cypress cypress:open:{environment}
 ```
 We can also run it using the headless electron browser:
 ```bash
-npm run cypress:test:{environment}
+npm run --prefix ./cypress cypress:test:{environment}
 ```
 ## Reporting
-We are using the allure mocha plugin for creating our reports since it offers us great support with Jenkins. To generate the report we can simply run:
+We are using the allure cypress plugin for creating our reports since it offers us great support with Jenkins. To generate the report we can simply run:
 ```bash
-npm install -g allure-commandline --save-dev
 npm run cypress:report
 ```
 This will open up a browser similar to this:
