@@ -18,7 +18,7 @@ The Cypress driver had an oversight when it came to interacting with iframes, wh
 The setup is pretty straightforward:
 ```bash
 git clone https://github.com/healthbridgeltd/ui-tests-boilerplate
-Copy the files (excluding the git files) into an existing project. This ensures the tests/features are stored alongside the code.
+# Copy the files (excluding the git files) into an existing project. This ensures the tests/features are stored alongside the code.
 
 # We use the --prefix since the package.json is stored within the cypress directory and this allows use to seperate our test runtime from the main project
 npm install --prefix ./cypress ./cypress
