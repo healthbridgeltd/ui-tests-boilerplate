@@ -19,13 +19,10 @@ The setup is pretty straightforward:
 ```bash
 git clone https://github.com/healthbridgeltd/ui-tests-boilerplate
 cd ui-tests-boilerplate
-# We choose to install cypress globally given we work with the cypress:included docker container
-# and we have multiple repos that use cypress. You always have the option to include it in
-# the package.json if required.
-npm install -g cypress
 
-npm install
-npm run cypress:open:local
+# We use the --prefix since the package.json is stored within the cypress directory and this allows use to seperate our test runtime from the main project
+npm install --prefix ./cypress ./cypress
+npm run --prefix ./cypress cypress:open:local
 ```
 Make sure to set the urls of the environments you want Cypress to point at. The json files are stored in the `cypress/config` directory.
 
