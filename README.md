@@ -22,7 +22,7 @@ git clone https://github.com/healthbridgeltd/ui-tests-boilerplate
 
 # We use the --prefix since the package.json is stored within the cypress directory and this allows use to seperate our test runtime from the main project
 npm install --prefix ./cypress ./cypress
-npm run --prefix ./cypress cypress:open:local
+npm run --prefix ./cypress cypress:open:{environment}
 ```
 Make sure to set the urls of the environments you want Cypress to point at. The json files are stored in the `cypress/config` directory.
 
