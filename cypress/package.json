@@ -29,7 +29,7 @@
     "cypress-file-upload": "5.0.2",
     "cypress-on-fix": "1.0.2",
     "path-browserify": "1.0.1",
-    "webpack": "5.89.0"
+    "webpack": "5.94.0"
   },
   "cypress-cucumber-preprocessor": {
     "json": {
